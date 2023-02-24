@@ -127,41 +127,43 @@ int Tries(string word, string guessed){
     return error;
 }
 int main(){
-    srand(time(0));
-    string guesses;
-    string wordToGuess;
-    wordToGuess = toUpper(LoadRandomWord("wordlist.txt"));
-    
-    
-    int tries = 0;
-    bool win = false;
-    do
-    {
-        system("cls");
-        PrintMessage("Hangman");
-        PrintHangman(tries);
-        PrintAvailableLetters(guesses);
-        PrintMessage("Guess the word");
-        win = PrintWord(wordToGuess, guesses);
-        if (win){
-            break;
-        }
-        char x;
-        cout << ">";
-        cin >> x;
-        x = toupper(x);
-        if (guesses.find(x) == string::npos)
-            guesses += x;
-        tries = Tries(wordToGuess, guesses);
-    }while (tries < 9);
-    
-    
-    if(win)
-        PrintMessage("You win!");
-    else
-        PrintMessage("Game over!");
-    PrintMessage("The word was " + wordToGuess, false);
-    
-    getchar();
+    do{
+        srand(time(0));
+        string guesses;
+        string wordToGuess;
+        wordToGuess = toUpper(LoadRandomWord("wordlist.txt"));
+        
+        
+        int tries = 0;
+        bool win = false;
+        do
+        {
+            system("cls");
+            PrintMessage("Hangman");
+            PrintHangman(tries);
+            PrintAvailableLetters(guesses);
+            PrintMessage("Guess the word");
+            win = PrintWord(wordToGuess, guesses);
+            if (win){
+                break;
+            }
+            char x;
+            cout << ">";
+            cin >> x;
+            x = toupper(x);
+            if (guesses.find(x) == string::npos)
+                guesses += x;
+            tries = Tries(wordToGuess, guesses);
+        }while (tries < 9);
+        
+        
+        if(win)
+            PrintMessage("You win!");
+        else
+            PrintMessage("Game over!");
+        PrintMessage("The word was " + wordToGuess, false);
+        cout << '\n' << "Press any key to continue...";
+        getchar();
+    }while (cin.get() != '\n');
     return 0;
 }
